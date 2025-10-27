@@ -1,0 +1,150 @@
+/* Body and container */
+.add-pet-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: #f3f4f6; /* light gray */
+  padding: 1rem 0;
+}
+
+.input-div {
+  display: flex;
+  flex-direction: column; /* label on top, input below */
+  justify-content: flex-start; /* no extra vertical spacing */
+  margin: 0; /* remove default margin */
+  padding: 0; /* remove padding */
+  width: 100%; /* make input stretch horizontally */
+  box-sizing: border-box;
+}
+
+/* Form styling */
+.add-pet-form {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 1.5rem; /* slightly smaller padding */
+  width: 95%;
+  max-width: 1200px; /* wider for more horizontal spread */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 1.5rem; /* FIXED: increased from 0.25rem to 0.75rem for better spacing */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* deeper shadow */
+  align-items: start; /* FIXED: changed from 'end' to 'start' to prevent stretching */
+}
+
+/* Form title spanning full width */
+.add-pet-form h2 {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #1f2937; /* dark gray */
+}
+
+/* Labels */
+.add-pet-form label {
+  margin-bottom: 0.15rem;
+  font-weight: 500;
+  color: #374151; /* medium gray */
+  font-size: 0.9rem;
+}
+
+/* Inputs and textarea */
+.add-pet-form input[type="text"],
+.add-pet-form textarea {
+  padding: 0.35rem 0.5rem; /* tighter vertically */
+  border: 1px solid #d1d5db; /* light gray border */
+  border-radius: 8px;
+  font-size: 0.95rem;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.add-pet-form textarea {
+  resize: none;
+}
+
+/* Focus effect */
+.add-pet-form input:focus,
+.add-pet-form textarea:focus {
+  outline: none;
+  border-color: #3b82f6; /* blue */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Submit button styling */
+.add-pet-form .submit-btn {
+  grid-column: 1 / -1; /* full width */
+  padding: 1rem 0.5rem; /* compact vertically */
+  background-color: #16a34a;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px; /* match inputs */
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+  transition: all 0.2s ease;
+}
+
+.add-pet-form .submit-btn:hover {
+  background-color: #15803d;
+  transform: translateY(-1px);
+}
+
+.file-upload-btn-new {
+  display: block;
+  width: 50%;        /* adjust width as needed */
+  max-width: 400px;  /* optional */
+  padding: 0.5rem;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.file-upload-btn-new:hover {
+  background-color: #1d4ed8;
+}
+
+
+.file-upload {
+  display: none; /* hide  real input */
+}
+
+
+.file-upload-div {
+  grid-column: 1 / -1; /* ceo row */
+  display: flex;
+  justify-content: center; /* center horizontally */
+  align-self: start; /* da se divovi ne stretchuju */
+  margin: 0;
+}
+
+/* Make form responsive for mobile */
+@media (max-width: 1024px) {
+  .add-pet-form {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem 1rem;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .add-pet-form {
+    grid-template-columns: 1fr; /* stack inputs vertically */
+    gap: 0.75rem 0;
+  }
+}
+
+
+

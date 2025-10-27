@@ -8,7 +8,7 @@ export default function Home() {
         
     </h1>
     <div>
-        <Link to='/add_pet'>
+        <Link to='/addpet'>
         <button>
 
         

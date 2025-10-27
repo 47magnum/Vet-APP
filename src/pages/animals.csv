@@ -1,0 +1,5 @@
+id,name,species,breed,owner_name,owner_phone,created_at
+9a1e5d1c-5f67-4c8a-91c8-123456789001,Bobby,Dog,Golden Retriever,John Smith,+381601234567,2025-10-26T12:00:00Z
+4f22b8a1-68c3-4b12-9987-123456789002,Mia,Cat,Siamese,Ana Petrović,+381605551234,2025-10-26T12:00:00Z
+c7e8d42a-91d2-4b45-87f1-123456789003,Max,Dog,Bulldog,Nikola Ilić,+381638882233,2025-10-26T12:00:00Z
+8b31f422-cc45-4ee9-8112-123456789004,Luna,Cat,Persian,Maša Milićević,+381601234555,2025-10-26T12:00:00Z

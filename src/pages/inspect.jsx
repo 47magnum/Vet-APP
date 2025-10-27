@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom'
-
+import '../inspect.css'
 
 export default function Inspect (){
     return(
@@ -12,12 +12,12 @@ export default function Inspect (){
             </h1>
             <button>
                 <h2>
-                    Create Spreadsheet from database
+                    Create Spreadsheet from DB
                 </h2>
             </button>
             <button>
                 <h2>
-                    Inspect Database
+                    Inspect DB
                 </h2>
             </button>
         </div>
