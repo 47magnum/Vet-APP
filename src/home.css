@@ -1,0 +1,119 @@
+.home-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e8f0fe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.home-content {
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Logo Section */
+.logo-section {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.clinic-logo {
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(21, 101, 192, 0.15);
+}
+
+.clinic-title {
+  color: #1565c0;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Navigation Grid */
+.home-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.home-nav-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.home-nav-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 6px rgba(21, 101, 192, 0.08);
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-nav-card:hover {
+  transform: translateY(-8px);
+  border-color: #1565c0;
+  box-shadow: 0 12px 24px rgba(21, 101, 192, 0.2);
+}
+
+.nav-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #1565c0;
+}
+
+.home-nav-card h2 {
+  color: #0d47a1;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.home-nav-card p {
+  color: #616161;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home-nav-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .clinic-title {
+    font-size: 1.5rem;
+  }
+
+  .clinic-logo {
+    max-width: 120px;
+  }
+
+  .home-nav-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .nav-icon {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .home-nav-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

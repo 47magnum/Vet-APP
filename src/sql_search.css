@@ -14,6 +14,95 @@
   text-transform: uppercase;
 }
 
+/* Back Button */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border: 2px solid #1565c0;
+  border-radius: 8px;
+  color: #1565c0;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.back-button:hover {
+  background: #1565c0;
+  color: white;
+  transform: translateX(-4px);
+}
+
+.back-button svg {
+  transition: transform 0.3s ease;
+}
+
+.back-button:hover svg {
+  transform: translateX(-4px);
+}
+
+/* Success Message */
+.success-message-container {
+  max-width: 600px;
+  margin: 4rem auto;
+  background: white;
+  border-radius: 16px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(21, 101, 192, 0.15);
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: #4caf50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: white;
+  margin: 0 auto 1.5rem auto;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.success-message-container h2 {
+  color: #1565c0;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.success-message-container p {
+  color: #616161;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.success-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.success-buttons .search-btn,
+.success-buttons .clear-btn {
+  min-width: 180px;
+}
+
 /* Search Section */
 .search-section {
   max-width: 1600px;
@@ -43,7 +132,6 @@
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
-  color: black;
 }
 
 .search-input:focus {

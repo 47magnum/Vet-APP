@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../sql_search.css";
+import BackButton from "./BackButton";
 
 export default function Patients() {
   const [patients, setPatients] = useState([]);
@@ -82,7 +83,7 @@ export default function Patients() {
   return (
     <div className="patients-container">
       <h1>PATIENTS</h1>
-      
+      <BackButton/>
       {/* Search Bar */}
       <div className="search-section">
         <form onSubmit={handleSearch} className="search-form">

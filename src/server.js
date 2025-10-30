@@ -160,7 +160,58 @@ app.get('/api/patients/search', async (req, res) => {
 });
 
 
+// Add files to existing patient
+app.post('/api/patients/:id/files', upload.array('files'), async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Verify patient exists
+    const { data: patient, error: patientError } = await supabase
+      .from('patients')
+      .select('id')
+      .eq('id', id)
+      .single();
+    
+    if (patientError || !patient) {
+      return res.status(404).json({ error: 'Patient not found' });
+    }
 
+    const uploadedFiles = [];
+
+    if (req.files && req.files.length > 0) {
+      for (const file of req.files) {
+        const { originalname, buffer, mimetype } = file;
+        const fileName = `${Date.now()}-${originalname}`;
+
+        const { data: fileData, error: fileError } = await supabase.storage
+          .from("patient-files")
+          .upload(`patients/${id}/${fileName}`, buffer, {
+            contentType: mimetype
+          });
+
+        if (fileError) {
+          console.error("File upload error:", fileError);
+          return res.status(400).json({ error: fileError.message });
+        }
+
+        // Store path in 'files' table
+        await supabase.from("files").insert([
+          { patient_id: id, file_path: fileData.path }
+        ]);
+
+        uploadedFiles.push(fileData.path);
+      }
+    }
+
+    res.json({
+      message: 'Files added successfully',
+      files: uploadedFiles
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 app.get('/api/patients', async (req, res) => {
   try {

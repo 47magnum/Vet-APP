@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Routes, Route, Link}  from "react-router-dom"
 import Home from './pages/home'
 import Inspect from './pages/inspect'
 import Patients from './pages/sql_search'
+import AddFilesToPatient from './pages/AddFilestoPatient'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +19,8 @@ function App() {
               <Route path='/addpet' element ={<AddPet/>}/>
               <Route path = '/inspect' element={<Inspect/>}/>
               <Route path='/patients' element={<Patients/>}/>
+              <Route path="/add-files" element={<AddFilesToPatient />} />
+
             </Routes>
           </Router>
       

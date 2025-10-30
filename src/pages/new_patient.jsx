@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import BackButton from "./BackButton";
 import "../new_patient.css";
+import "../sql_search.css";
 
 export default function AddPet() {
+  const navigate = useNavigate();
+  const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
     petName: "",
     breed: "",
@@ -11,19 +16,18 @@ export default function AddPet() {
     ownerPhone: "",
     files: [],
   });
-const handleChange = (e) => {
-  const { name, value, files } = e.target;
-  setFormData({
-    ...formData,
-    [name]: files ? Array.from(files) : value, // store all selected files
-  });
-};
 
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setFormData({
+      ...formData,
+      [name]: files ? Array.from(files) : value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // create FormData for backend
     const formPayload = new FormData();
     formPayload.append("name", formData.petName);
     formPayload.append("breed", formData.breed);
@@ -33,11 +37,10 @@ const handleChange = (e) => {
     formPayload.append("owner_phone", formData.ownerPhone);
 
     if (formData.files && formData.files.length > 0) {
-  for (let i = 0; i < formData.files.length; i++) {
-    formPayload.append("files", formData.files[i]);
-  }
-}
-
+      for (let i = 0; i < formData.files.length; i++) {
+        formPayload.append("files", formData.files[i]);
+      }
+    }
 
     try {
       const res = await fetch("http://localhost:5000/api/patients", {
@@ -49,16 +52,7 @@ const handleChange = (e) => {
       console.log("Response:", data);
 
       if (res.ok) {
-        alert("Pet added successfully!");
-        setFormData({
-          petName: "",
-          breed: "",
-          problem: "",
-          petSpecies: "",
-          ownerName: "",
-          ownerPhone: "",
-          file: null,
-        });
+        setShowSuccess(true); // Show success screen instead of alert
       } else {
         alert("Error: " + data.error);
       }
@@ -68,8 +62,51 @@ const handleChange = (e) => {
     }
   };
 
+  const handleAddAnother = () => {
+    setShowSuccess(false);
+    setFormData({
+      petName: "",
+      breed: "",
+      problem: "",
+      petSpecies: "",
+      ownerName: "",
+      ownerPhone: "",
+      files: [],
+    });
+    // Reset file input
+    const fileInput = document.getElementById('file');
+    if (fileInput) fileInput.value = '';
+  };
+
+  const handleReturnHome = () => {
+    navigate('/');
+  };
+
+  // Success Screen
+  if (showSuccess) {
+    return (
+      <div className="add-pet-container">
+        <div className="success-message-container">
+          <div className="success-icon">✓</div>
+          <h2>Pet Added Successfully!</h2>
+          <p>The patient has been added to the database.</p>
+          <div className="success-buttons">
+            <button onClick={handleAddAnother} className="search-btn">
+              Add Another Pet
+            </button>
+            <button onClick={handleReturnHome} className="clear-btn">
+              Return to Home
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Form Screen
   return (
     <div className="add-pet-container">
+      <BackButton />
       <form onSubmit={handleSubmit} className="add-pet-form">
         <h2>Add Pet</h2>
 
@@ -162,9 +199,8 @@ const handleChange = (e) => {
           />
           <label htmlFor="file" className="file-upload-btn-new">
             {formData.files.length > 0
-  ? formData.files.map(f => f.name).join(", ")
-  : "Upload File"}
-
+              ? formData.files.map(f => f.name).join(", ")
+              : "Upload File"}
           </label>
         </div>
 
