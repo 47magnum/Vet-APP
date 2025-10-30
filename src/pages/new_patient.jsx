@@ -156,6 +156,7 @@ const handleChange = (e) => {
             id="file"
             name="files"
             onChange={handleChange}
+            multiple
             accept=".jpeg,.png,.pdf,.jpg"
             className="file-upload"
           />

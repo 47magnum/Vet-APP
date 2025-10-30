@@ -27,6 +27,13 @@ export default function Home() {
         </h3>
         </button>
         </Link>
+        <Link to='/patients'>
+        <button>
+            <h3>
+                SQL search
+            </h3>
+        </button>
+        </Link>
 </div>
 
     )
