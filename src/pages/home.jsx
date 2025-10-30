@@ -2,13 +2,12 @@ import { Link } from "react-router-dom";
 import "../home.css";
 
 export default function Home() {
-  // TODO: Replace this with your actual logo URL
   const LOGO_URL = "YOUR_LOGO_URL_HERE";
 
   return (
     <div className="home-container">
       <div className="home-content">
-        {/* Logo Section */}
+        {/* Logo  */}
         <div className="logo-section">
           <img 
             src={LOGO_URL} 
@@ -18,7 +17,7 @@ export default function Home() {
           <h1 className="clinic-title">Veterinary Management System</h1>
         </div>
 
-        {/* Navigation Buttons */}
+        {/* Nav Btns */}
         <div className="home-nav-grid">
           <Link to="/addpet" className="home-nav-link">
             <div className="home-nav-card">

@@ -1,6 +1,0 @@
-id,name,species,breed,owner_name,owner_phone,created_at
-1,Rex,Dog,Golden Retriever,Marko,0690000001,2025-10-30 10:00:00
-2,Bella,Cat,Siamese,Milica,0690000002,2025-10-29 15:30:00
-3,Charlie,Rabbit,Netherland Dwarf,Jovan,0690000003,2025-10-28 09:45:00
-4,Luna,Dog,Labrador Ana,0690000004,2025-10-27 12:15:00
-5,Max,Cat,British Shorthair,Mara,0690000005,2025-10-26 16:50:00

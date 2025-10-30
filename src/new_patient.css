@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  background-color: black; /* light gray */
+  background: linear-gradient(135deg, #f0f4f8 0%, #e8f0fe 100%);
   padding: 1rem 0;
 }
 

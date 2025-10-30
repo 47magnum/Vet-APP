@@ -20,7 +20,6 @@ function App() {
               <Route path = '/inspect' element={<Inspect/>}/>
               <Route path='/patients' element={<Patients/>}/>
               <Route path="/add-files" element={<AddFilesToPatient />} />
-
             </Routes>
           </Router>
       
