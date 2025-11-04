@@ -5,6 +5,8 @@ import multer from 'multer';
 import path from 'path';
 import cors from 'cors'
 
+
+
 dotenv.config();
 const app = express();
 
@@ -264,3 +266,138 @@ app.get('/api/patients', async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+app.get('/api/appointments', async (req, res) => {
+  try {
+    const { data: appointments, error } = await supabase
+      .from('appointments')
+      .select(`
+        *,
+        patients (
+          id,
+          name,
+          species,
+          breed,
+          owner_name,
+          owner_phone
+        )
+      `)
+      .order('appointment_date', { ascending: true });
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    res.json(appointments);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Get appointments for a specific date range
+app.get('/api/appointments/range', async (req, res) => {
+  try {
+    const { start, end } = req.query;
+
+    let query = supabase
+      .from('appointments')
+      .select(`
+        *,
+        patients (
+          id,
+          name,
+          species,
+          breed,
+          owner_name,
+          owner_phone
+        )
+      `)
+      .order('appointment_date', { ascending: true });
+
+    if (start) {
+      query = query.gte('appointment_date', start);
+    }
+    if (end) {
+      query = query.lte('appointment_date', end);
+    }
+
+    const { data: appointments, error } = await query;
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    res.json(appointments);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Create new appointment
+app.post('/api/appointments', async (req, res) => {
+  try {
+    const { patient_id, appointment_date, duration_minutes, reason, notes } = req.body;
+
+    if (!patient_id || !appointment_date) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const { data: appointment, error } = await supabase
+      .from('appointments')
+      .insert([{
+        patient_id,
+        appointment_date,
+        duration_minutes: duration_minutes || 30,
+        reason,
+        notes
+      }])
+      .select(`
+        *,
+        patients (
+          id,
+          name,
+          species,
+          breed,
+          owner_name,
+          owner_phone
+        )
+      `)
+      .single();
+
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    res.json({
+      message: 'Appointment created successfully',
+      appointment
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Delete appointment
+app.delete('/api/appointments/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { error } = await supabase
+      .from('appointments')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    res.json({ message: 'Appointment deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});

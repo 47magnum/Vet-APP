@@ -2,12 +2,13 @@ import { Link } from "react-router-dom";
 import "../home.css";
 
 export default function Home() {
+  // TODO: Replace this with your actual logo URL
   const LOGO_URL = "YOUR_LOGO_URL_HERE";
 
   return (
     <div className="home-container">
       <div className="home-content">
-        {/* Logo  */}
+        {/* Logo Section */}
         <div className="logo-section">
           <img 
             src={LOGO_URL} 
@@ -17,7 +18,7 @@ export default function Home() {
           <h1 className="clinic-title">Veterinary Management System</h1>
         </div>
 
-        {/* Nav Btns */}
+        {/* Navigation Buttons */}
         <div className="home-nav-grid">
           <Link to="/addpet" className="home-nav-link">
             <div className="home-nav-card">
@@ -48,6 +49,22 @@ export default function Home() {
               <div className="nav-icon">📎</div>
               <h2>Dodaj Fajlove</h2>
               <p>Add files to existing patients</p>
+            </div>
+          </Link>
+
+          <Link to="/calendar" className="home-nav-link">
+            <div className="home-nav-card">
+              <div className="nav-icon">📅</div>
+              <h2>Kalendar</h2>
+              <p>View and manage appointments</p>
+            </div>
+          </Link>
+
+          <Link to="/new-appointment" className="home-nav-link">
+            <div className="home-nav-card">
+              <div className="nav-icon">⏰</div>
+              <h2>Novi Termin</h2>
+              <p>Schedule new appointment</p>
             </div>
           </Link>
         </div>

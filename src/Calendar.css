@@ -1,0 +1,350 @@
+.calendar-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e8f0fe 100%);
+  padding: 2rem;
+}
+
+.calendar-header {
+  max-width: 1600px;
+  margin: 0 auto 2rem auto;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(21, 101, 192, 0.1);
+}
+
+.calendar-header h1 {
+  color: #1565c0;
+  font-size: 2rem;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.view-switcher {
+  display: flex;
+  gap: 0.5rem;
+  background: #f5f5f5;
+  padding: 0.25rem;
+  border-radius: 8px;
+}
+
+.view-switcher button {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #616161;
+  transition: all 0.3s ease;
+}
+
+.view-switcher button.active {
+  background: #1565c0;
+  color: white;
+}
+
+.date-navigation {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.date-navigation button {
+  padding: 0.5rem 1rem;
+  border: 2px solid #1565c0;
+  background: white;
+  color: #1565c0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.date-navigation button:hover {
+  background: #1565c0;
+  color: white;
+}
+
+.current-date {
+  font-weight: 600;
+  color: #1565c0;
+  min-width: 200px;
+  text-align: center;
+}
+
+.new-apt-btn {
+  padding: 0.75rem 1.5rem;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.new-apt-btn:hover {
+  background: #388e3c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.calendar-body {
+  max-width: 1600px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(21, 101, 192, 0.1);
+  overflow-x: auto;
+}
+
+/* Day View */
+.day-view {
+  display: flex;
+  gap: 1rem;
+}
+
+.time-column {
+  min-width: 80px;
+  border-right: 2px solid #e3f2fd;
+}
+
+.time-slot {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #f0f4f8;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #616161;
+}
+
+.appointments-column {
+  flex: 1;
+}
+
+.appointment-slot {
+  min-height: 60px;
+  border-bottom: 1px solid #f0f4f8;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.appointment-card {
+  background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(21, 101, 192, 0.2);
+  transition: all 0.3s ease;
+}
+
+.appointment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
+}
+
+.delete-apt-btn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.delete-apt-btn:hover {
+  background: #f44336;
+  transform: scale(1.1);
+}
+
+.apt-time {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.apt-patient {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.apt-owner {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.apt-reason {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* Week View */
+.week-view {
+  min-width: 1200px;
+}
+
+.week-header {
+  display: grid;
+  grid-template-columns: 80px repeat(7, 1fr);
+  gap: 1px;
+  background: #e3f2fd;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
+
+.time-header,
+.day-header {
+  background: #1565c0;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.day-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.day-name {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.day-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.week-grid {
+  display: grid;
+  grid-template-columns: 80px repeat(7, 1fr);
+  gap: 1px;
+  background: #f0f4f8;
+}
+
+.day-column {
+  background: white;
+}
+
+.appointment-card-small {
+  background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(21, 101, 192, 0.2);
+}
+
+.delete-apt-btn-small {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.delete-apt-btn-small:hover {
+  background: #f44336;
+}
+
+.apt-patient-small {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.loading,
+.no-appointments {
+  text-align: center;
+  padding: 3rem;
+  color: #757575;
+  font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .calendar-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .date-navigation {
+    justify-content: center;
+  }
+
+  .calendar-body {
+    overflow-x: scroll;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-container {
+    padding: 1rem;
+  }
+
+  .calendar-header {
+    padding: 1rem;
+  }
+
+  .calendar-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .view-switcher button {
+    padding: 0.5rem 1rem;
+  }
+
+  .current-date {
+    font-size: 0.9rem;
+    min-width: 150px;
+  }
+}
+
+
+.week-header,
+.week-grid {
+  direction: ltr;
+}
