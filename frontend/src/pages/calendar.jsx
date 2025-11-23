@@ -10,6 +10,7 @@ export default function Calendar() {
   const [view, setView] = useState('week'); // 'day', 'week', 'month'
   const [loading, setLoading] = useState(false);
   const [showNewAppointment, setShowNewAppointment] = useState(false);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     fetchAppointments();
@@ -21,7 +22,7 @@ export default function Calendar() {
     
     try {
       const response = await fetch(
-        `http://localhost:5000/api/appointments/range?start=${start}&end=${end}`
+        `${API_BASE}/api/appointments/range?start=${start}&end=${end}`
       );
       const data = await response.json();
       setAppointments(data);
@@ -113,7 +114,7 @@ export default function Calendar() {
     if (!confirm('Are you sure you want to delete this appointment?')) return;
     
     try {
-      const response = await fetch(`http://localhost:5000/api/appointments/${id}`, {
+      const response = await fetch(`${API_BASE}/api/appointments/${id}`, {
         method: 'DELETE'
       });
       

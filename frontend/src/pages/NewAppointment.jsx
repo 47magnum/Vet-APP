@@ -17,10 +17,11 @@ export default function NewAppointment() {
     reason: "",
     notes: ""
   });
+    const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     // Fetch all patients
-    fetch("http://localhost:5000/api/patients")
+    fetch(`${API_BASE}/api/patients`)
       .then((res) => res.json())
       .then((data) => setPatients(data))
       .catch((err) => console.error("Error fetching patients:", err));
@@ -53,7 +54,7 @@ export default function NewAppointment() {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/appointments", {
+      const response = await fetch(`${API_BASE}/api/appointments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

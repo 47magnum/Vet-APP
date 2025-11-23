@@ -16,6 +16,8 @@ export default function AddPet() {
     ownerPhone: "",
     files: [],
   });
+    const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -43,7 +45,7 @@ export default function AddPet() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/patients", {
+      const res = await fetch('${API_BASE}/api/patients', {
         method: "POST",
         body: formPayload,
       });

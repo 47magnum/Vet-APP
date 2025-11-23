@@ -12,10 +12,12 @@ export default function AddFilesToPatient() {
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
   // Fetch all patients on mount
   useEffect(() => {
-    fetch("http://localhost:5000/api/patients")
+    fetch(`${API_BASE}/api/patients`)
       .then((res) => res.json())
       .then((data) => setPatients(data))
       .catch((err) => console.error("Error fetching patients:", err));
@@ -47,7 +49,7 @@ export default function AddFilesToPatient() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/patients/${selectedPatient}/files`,
+        `${API_BASE}/api/patients/${selectedPatient}/files`,
         {
           method: "POST",
           body: formData,
