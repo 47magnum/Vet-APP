@@ -13,6 +13,8 @@ export default function Patients() {
     owner_name: '',
     owner_phone: ''
   });
+      const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 
   // Load all patients on mount
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function Patients() {
 
   const fetchAllPatients = () => {
     setLoading(true);
-    fetch("http://localhost:5000/api/patients")
+    fetch(`${API_BASE}/api/patients`)
       .then((res) => res.json())
       .then((data) => {
         setPatients(data);
@@ -51,7 +53,7 @@ export default function Patients() {
     }
 
     setLoading(true);
-    fetch(`http://localhost:5000/api/patients/search?${params.toString()}`)
+    fetch(`${API_BASE}/api/patients/search?${params.toString()}`)
       .then((res) => res.json())
       .then((data) => {
         setPatients(data);

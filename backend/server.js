@@ -15,15 +15,23 @@ if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1); // if Render is fronting with a proxy
 }
 
-// CORS - allow only the frontend origin in production
-const allowedOrigin = process.env.FRONTEND_URL || (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5173');
+// CORS - allow only the frontend origin in productionconst allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', process.env.FRONTEND_URL];
 
 app.use(cors({
-  origin: allowedOrigin || '*',
+  origin: function(origin, callback) {
+    // allow requests with no origin (like Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET','POST','PUT','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization'],
   credentials: true
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
