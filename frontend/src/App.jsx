@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 import './App.css'
 import AddPet from './pages/new_patient'
@@ -10,7 +12,6 @@ import AddFilesToPatient from './pages/AddFilestoPatient'
 import Calendar from './pages/calendar'
 import NewAppointment from './pages/NewAppointment';
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
 
