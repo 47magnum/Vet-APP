@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "./BackButton";
-import "../calendar.css";
+import "../Calendar.css";
 
 export default function Calendar() {
   const navigate = useNavigate();
