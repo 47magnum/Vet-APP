@@ -15,7 +15,8 @@ if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1); // if Render is fronting with a proxy
 }
 
-// CORS - allow only the frontend origin in productionconst allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', process.env.FRONTEND_URL];
+// CORS - allow only the frontend origin in production
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', process.env.FRONTEND_URL];
 
 app.use(cors({
   origin: function(origin, callback) {
