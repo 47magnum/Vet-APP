@@ -195,7 +195,7 @@ export default function AddPet() {
             name="files"
             onChange={handleChange}
             multiple
-            accept=".jpeg,.png,.pdf,.jpg"
+            accept="image/*,.pdf,.doc,.docx,.txt,.xls,.xlsx"
             className="file-upload"
           />
           <label htmlFor="file" className="file-upload-btn-new">
