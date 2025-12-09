@@ -43,7 +43,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 const storage = multer.memoryStorage();
 const upload = multer({
   storage,
-  limits: { fileSize: parseInt(process.env.MAX_FILE_SIZE_BYTES || `${10 * 1024 * 1024}`, 10) } // default 10MB
+  limits: { fileSize: parseInt(process.env.MAX_FILE_SIZE_BYTES || `${50 * 1024 * 1024}`, 10) } 
 });
 
 
