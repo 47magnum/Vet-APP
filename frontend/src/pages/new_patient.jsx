@@ -49,25 +49,25 @@ export default function AddPet() {
          { method: 'POST',
            body: formPayload });
   let data;
+  const text = await res.text();
   try {
-  data = await res.json();
-} catch (e) {
-  console.error('Server returned non-JSON:', await res.text());
-  throw e;
+    data = JSON.parse(text);
+} catch {
+  console.error('Server returned non-JSON:',text);
+  throw new Error ("Server returned non json");
 }
 
 
-      if (res.ok) {
-        setShowSuccess(true); // Show success screen instead of alert
-      } else {
-        alert("Error: " + data.error);
+      if (!res.ok) {
+        console.log('server error: ', data);
+        throw new Error(data.error ||  "Unknown server error");
       }
-    } catch (err) {
-      console.error(err);
-      alert("Server error");
-    }
-  };
-
+      console.log("Success. ", data );
+        
+      }catch(err){
+        console.error("Fetch error: ", err);
+      }}
+  
   const handleAddAnother = () => {
     setShowSuccess(false);
     setFormData({
@@ -216,5 +216,4 @@ export default function AddPet() {
         </button>
       </form>
     </div>
-  );
-}
+  )}
