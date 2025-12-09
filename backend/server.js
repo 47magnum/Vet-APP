@@ -70,16 +70,17 @@ app.post('/api/patients', upload.array('files'), async (req, res) => {
     }
 
     const uploadedFiles = [];
-
+    
     if (req.files && req.files.length > 0) {
       for (const file of req.files) {
         const { originalname, buffer, mimetype } = file;
         const fileName = `${Date.now()}-${originalname}`;
+        const safeMimeType = mimetype || 'application/octet-stream';
 
         const { data: fileData, error: fileError } = await supabase.storage
           .from('patient-files')
           .upload(`patients/${patientData.id}/${fileName}`, buffer, {
-            contentType: mimetype,
+            contentType: safeMimeType,
             upsert: false
           });
 
@@ -193,11 +194,11 @@ app.post('/api/patients/:id/files', upload.array('files'), async (req, res) => {
       for (const file of req.files) {
         const { originalname, buffer, mimetype } = file;
         const fileName = `${Date.now()}-${originalname}`;
-
+        const safeMimeType = mimetype || 'application/octet-stream';
         const { data: fileData, error: fileError } = await supabase.storage
           .from('patient-files')
           .upload(`patients/${id}/${fileName}`, buffer, {
-            contentType: mimetype,
+            contentType: safeMimeType,
             upsert: false
           });
 
