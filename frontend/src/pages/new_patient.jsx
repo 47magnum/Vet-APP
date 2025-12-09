@@ -62,8 +62,7 @@ export default function AddPet() {
         console.log('server error: ', data);
         throw new Error(data.error ||  "Unknown server error");
       }
-      console.log("Success. ", data );
-        
+      setShowSuccess(true);         
       }catch(err){
         console.error("Fetch error: ", err);
       }}
