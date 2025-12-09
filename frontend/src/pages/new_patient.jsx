@@ -44,13 +44,18 @@ export default function AddPet() {
     }
 
     try {
-      const res = await fetch(`${API_BASE}/api/patients`, {
-        method: "POST",
-        body: formPayload,
-      });
 
-      const data = await res.json();
-      console.log("Response:", data);
+      const res = await fetch(`${API_BASE}/api/patients`,
+         { method: 'POST',
+           body: formPayload });
+  let data;
+  try {
+  data = await res.json();
+} catch (e) {
+  console.error('Server returned non-JSON:', await res.text());
+  throw e;
+}
+
 
       if (res.ok) {
         setShowSuccess(true); // Show success screen instead of alert
