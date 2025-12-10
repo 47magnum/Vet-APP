@@ -3,7 +3,7 @@
 
   export default function Home() {
     // TODO: Replace this with your actual logo URL
-    const LOGO_URL = "YOUR_LOGO_URL_HERE";
+    const LOGO_URL = "";
 
     return (
       <div className="home-container">
@@ -11,7 +11,7 @@
           {/* Logo Section */}
           <div className="logo-section">
             <img 
-              src={LOGO_URL} 
+              src={'../../public/logo.png'} 
               alt="Veterinary Clinic Logo" 
               className="clinic-logo"
             />
