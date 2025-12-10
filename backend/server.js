@@ -55,7 +55,7 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 app.post('/api/patients', upload.array('files'), async (req, res) => {
   try {
     const { name, species, breed, owner_name, owner_phone } = req.body;
-
+    
     if (!name || !species || !breed || !owner_name || !owner_phone) {
       return res.status(400).json({ error: 'Missing fields' });
     }
@@ -90,6 +90,7 @@ app.post('/api/patients', upload.array('files'), async (req, res) => {
           console.error('File upload error:', fileError);
           return res.status(400).json({ error: fileError.message });
         }
+        console.log("Uploaded files:", req.files);
 
         // store path in 'files' table
         const { error: filesInsertError } = await supabase.from('files').insert([
