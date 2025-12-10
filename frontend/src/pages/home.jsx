@@ -9,7 +9,7 @@
           {/* Logo Section */}
           <div className="logo-section">
             <img 
-              src={'/logo.png'} 
+              src={'/logo.jpeg'} 
               alt="Veterinary Clinic Logo" 
               className="clinic-logo"
             />
