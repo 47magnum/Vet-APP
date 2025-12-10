@@ -1,5 +1,7 @@
+/* Full-screen background for all devices */
 .home-container {
   min-height: 100vh;
+  width: 100%;
   background: linear-gradient(135deg, #f0f4f8 0%, #e8f0fe 100%);
   display: flex;
   align-items: center;
@@ -7,9 +9,10 @@
   padding: 2rem;
 }
 
+/* Centers content and controls max width */
 .home-content {
-  max-width: 900px;
   width: 100%;
+  max-width: 1200px; /* Increased for laptops */
 }
 
 /* Logo Section */
@@ -28,7 +31,7 @@
 
 .clinic-title {
   color: #1565c0;
-  font-size: 2rem;
+  font-size: 2.4rem; /* slightly larger for laptop */
   font-weight: 700;
   margin: 0;
   letter-spacing: 0.5px;
@@ -37,8 +40,8 @@
 /* Navigation Grid */
 .home-nav-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: 1fr; /* Default - mobile */
+  gap: 2rem; /* More spacing for clean layout */
 }
 
 .home-nav-link {
@@ -76,7 +79,7 @@
 
 .home-nav-card h2 {
   color: #0d47a1;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 600;
   margin: 0 0 0.5rem 0;
 }
@@ -88,32 +91,25 @@
   line-height: 1.4;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Medium devices (tablets: 768px–1024px) → 2 columns */
+@media (min-width: 768px) and (max-width: 1024px) {
   .home-nav-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .clinic-title {
-    font-size: 1.5rem;
-  }
-
-  .clinic-logo {
-    max-width: 120px;
-  }
-
-  .home-nav-card {
-    padding: 1.5rem 1rem;
-  }
-
-  .nav-icon {
-    font-size: 2.5rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+/* Laptops and above → 3 columns */
+@media (min-width: 1025px) {
   .home-nav-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem; /* more space on laptops */
+  }
+
+  .clinic-title {
+    font-size: 2.8rem; /* more presence on larger screens */
+  }
+
+  .clinic-logo {
+    max-width: 180px;
   }
 }
