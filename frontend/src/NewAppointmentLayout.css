@@ -8,7 +8,7 @@
 .appointment-card-wide {
   background: white;
   width: 100%;
-  max-width: 900px; /* Široko ali kontrolisano */
+  max-width: 900px; 
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -28,7 +28,7 @@
   border: 1px solid #ddd;
   border-radius: 6px;
   font-size: 16px;
-  box-sizing: border-box; /* Bitno za responzivnost */
+  box-sizing: border-box; 
 }
 
 .form-row {
