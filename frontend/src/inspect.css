@@ -1,174 +1,195 @@
-.inspect-container-wide {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-.inspect-card {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-}
-
-.search-input-wide {
-  width: 100%;
-  padding: 15px;
-  margin: 20px 0;
-  border: 2px solid #e3f2fd;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-.patient-item-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  border-bottom: 1px solid #f0f0f0;
-  transition: background 0.2s;
-}
-
-.patient-item-row:hover {
-  background: #f9fcff;
-}
-
-.patient-info strong {
-  font-size: 1.2rem;
-  color: #2196f3;
-}
-
-.edit-mini-btn {
-  background: #3498db;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* Edit Form unutar Modala */
-.edit-form label {
-  display: block;
-  margin-top: 15px;
-  font-weight: bold;
-}
-
-.edit-form input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.save-btn {
-  width: 100%;
-  background: #27ae60;
-  color: white;
-  border: none;
-  padding: 15px;
-  margin-top: 25px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.results-list {
-  margin-top: 20px;
-  max-height: 400px;
-  overflow-y: auto;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background: #fcfcfc;
-}
-
-.patient-search-result {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 20px;
-  border-bottom: 1px solid #eee;
-}
-
-.patient-search-result:last-child {
-  border-bottom: none;
-}
-
-.result-text {
-  font-size: 15px;
-  color: #444;
-}
-
-.edit-btn-pill {
-  background: #e3f2fd;
-  color: #2196f3;
-  border: 1px solid #2196f3;
-  padding: 5px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
-}
-
-.edit-btn-pill:hover {
-  background: #2196f3;
-  color: white;
-}
-
-/* Modal specifično za izmenu */
-.modal-content {
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 500px;
-}
-
-/* Kontejner koji drži sve na stranici */
-.full-page-container {
+/* WRAPPER - full page container */
+.ins-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centriranje horizontalno */
-  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
   min-height: 100vh;
-  padding: 40px 20px;
   background-color: #f0f7ff;
+  padding: 80px 20px 40px 20px;
+  box-sizing: border-box;
+  position: relative;
 }
 
-/* Panel koji mora ostati iste veličine */
-.appointment-card-wide {
+/* MAIN PANEL - centered white box */
+.ins-panel {
   background: white;
   width: 100%;
-  max-width: 600px; /* FIKSNA ŠIRINA - neće se širiti više od ovoga */
-  padding: 30px;
+  max-width: 600px;
+  padding: 35px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  margin-top: 20px;
+  box-shadow: 0 10px 25px rgba(21, 101, 192, 0.12);
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
-/* Lista rezultata unutar panela */
-.results-list {
-  margin-top: 20px;
-  max-height: 300px; /* Ograničavamo visinu da ne gura panel previše dole */
-  overflow-y: auto;  /* Scroll unutar panela ako ima puno pacijenata */
-  border-top: 1px solid #eee;
+.ins-title {
+  color: #1565c0;
+  text-align: center;
+  margin: 0 0 25px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
-.patient-search-result {
+.ins-field-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ins-field-group label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.ins-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e3f2fd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.ins-input:focus {
+  outline: none;
+  border-color: #1565c0;
+}
+
+.ins-results-container {
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.ins-patient-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 0;
-  border-bottom: 1px solid #f9f9f9;
+  border-bottom: 1px solid #f5f5f5;
 }
 
-/* Da bi polja u modalu bila lepa */
-.wide-input {
+.ins-patient-row:hover {
+  background-color: #f9f9f9;
+}
+
+.result-text {
+  flex: 1;
+  color: #333;
+}
+
+.ins-btn-edit {
+  background: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #1565c0;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.ins-btn-edit:hover {
+  background: #1565c0;
+  color: white;
+}
+
+/* MODAL OVERLAY */
+.ins-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* MODAL CONTENT */
+.ins-modal-content {
+  background: white;
   width: 100%;
-  padding: 12px;
-  margin: 8px 0 15px 0;
+  max-width: 500px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.ins-modal-title {
+  color: #1565c0;
+  margin: 0 0 20px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* MODAL BUTTONS */
+.ins-modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.ins-btn-save {
+  flex: 1;
+  background: #1565c0;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.ins-btn-save:hover {
+  background: #0d47a1;
+}
+
+.ins-btn-cancel {
+  flex: 1;
+  background: #f5f5f5;
+  color: #666;
   border: 1px solid #ddd;
-  border-radius: 6px;
-  box-sizing: border-box; /* Ključno da ne prelazi ivice */
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.ins-btn-cancel:hover {
+  background: #e0e0e0;
+  border-color: #999;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .ins-wrapper {
+    padding: 60px 15px 30px 15px;
+  }
+
+  .ins-panel {
+    padding: 25px 20px;
+  }
+
+  .ins-modal-content {
+    padding: 25px 20px;
+  }
 }

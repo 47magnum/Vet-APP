@@ -20,44 +20,42 @@ export default function Inspect() {
   };
 
   const handleUpdate = async (e) => {
-  e.preventDefault();
-  
-  // Proveri da li editingPatient ima ID
-  if (!editingPatient?.id) return;
+    e.preventDefault();
+    if (!editingPatient?.id) return;
 
-  try {
-    const res = await fetch(`${API_BASE}/api/patients/${editingPatient.id}`, {
-      method: "PUT",
-      headers: { 
-        "Content-Type": "application/json" 
-      },
-      body: JSON.stringify({
-        name: editingPatient.name,
-        species: editingPatient.species,
-        breed: editingPatient.breed,
-        owner_name: editingPatient.owner_name,
-        owner_phone: editingPatient.owner_phone
-      }),
-    });
+    try {
+      const res = await fetch(`${API_BASE}/api/patients/${editingPatient.id}`, {
+        method: "PUT",
+        headers: { 
+          "Content-Type": "application/json" 
+        },
+        body: JSON.stringify({
+          name: editingPatient.name,
+          species: editingPatient.species,
+          breed: editingPatient.breed,
+          owner_name: editingPatient.owner_name,
+          owner_phone: editingPatient.owner_phone
+        }),
+      });
 
-    if (res.status === 404) {
-      alert("Server ne pronalazi rutu. Proveri da li je server.js ažuriran na Renderu.");
-      return;
+      if (res.status === 404) {
+        alert("Server ne pronalazi rutu. Proveri da li je server.js ažuriran na Renderu.");
+        return;
+      }
+
+      if (res.ok) {
+        alert("Uspešno izmenjeno!");
+        setEditingPatient(null);
+        fetchPatients();
+      } else {
+        const errData = await res.json();
+        alert("Greška: " + errData.error);
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+      alert("Greška u komunikaciji sa serverom.");
     }
-
-    if (res.ok) {
-      alert("Uspešno izmenjeno!");
-      setEditingPatient(null);
-      fetchPatients(); // Osveži listu
-    } else {
-      const errData = await res.json();
-      alert("Greška: " + errData.error);
-    }
-  } catch (err) {
-    console.error("Fetch error:", err);
-    alert("Greška u komunikaciji sa serverom.");
-  }
-};
+  };
 
   const filteredPatients = patients.filter(p => 
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -65,34 +63,30 @@ export default function Inspect() {
   );
 
   return (
-    <div className="full-page-container">
+    <div className="ins-wrapper">
       <BackButton />
-      <div className="appointment-card-wide">
-        <h2 style={{color: '#2196f3', marginBottom: '20px'}}>Pretraga i Izmena Baze</h2>
+      
+      <div className="ins-panel">
+        <h2 className="ins-title">Pretraga i Izmena Baze</h2>
         
-        {/* Search deo - identičan kao u NewAppointment */}
-        <div className="form-section">
-          <label>Pretraži bazu</label>
+        <div className="ins-field-group">
+          <label>Pronađi pacijenta</label>
           <input 
             type="text" 
-            placeholder="Pronađi pacijenta..." 
-            value={searchTerm} 
-            onChange={(e) => setSearchTerm(e.target.value)} 
-            className="wide-input"
+            className="ins-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Ime ljubimca..."
           />
         </div>
 
-        {/* Lista rezultata u vidu "pilula" ili kartica */}
-        <div className="results-list">
+        <div className="ins-results-container">
           {filteredPatients.map(p => (
-            <div key={p.id} className="patient-search-result">
+            <div key={p.id} className="ins-patient-row">
               <div className="result-text">
-                <strong>{p.name}</strong> • {p.owner_name} ({p.owner_phone})
+                <strong>{p.name}</strong> • {p.owner_name}
               </div>
-              <button 
-                className="edit-btn-pill" 
-                onClick={() => setEditingPatient(p)}
-              >
+              <button className="ins-btn-edit" onClick={() => setEditingPatient(p)}>
                 Izmeni
               </button>
             </div>
@@ -100,35 +94,66 @@ export default function Inspect() {
         </div>
       </div>
 
-      {/* Modal za izmenu */}
+      {/* Modal for editing */}
       {editingPatient && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button className="close-modal" onClick={() => setEditingPatient(null)}>&times;</button>
-            <h3>Izmeni podatke</h3>
-            <form onSubmit={handleUpdate} className="modern-form">
-              <label>Ime Ljubimca</label>
-              <input 
-                type="text" 
-                className="wide-input"
-                value={editingPatient.name} 
-                onChange={e => setEditingPatient({...editingPatient, name: e.target.value})}
-              />
-              <label>Ime Vlasnika</label>
-              <input 
-                type="text" 
-                className="wide-input"
-                value={editingPatient.owner_name} 
-                onChange={e => setEditingPatient({...editingPatient, owner_name: e.target.value})}
-              />
-              <label>Telefon</label>
-              <input 
-                type="text" 
-                className="wide-input"
-                value={editingPatient.owner_phone} 
-                onChange={e => setEditingPatient({...editingPatient, owner_phone: e.target.value})}
-              />
-              <button type="submit" className="submit-btn-large">Sačuvaj Promene</button>
+        <div className="ins-modal-overlay" onClick={() => setEditingPatient(null)}>
+          <div className="ins-modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3 className="ins-modal-title">Izmeni pacijenta</h3>
+            <form onSubmit={handleUpdate}>
+              <div className="ins-field-group">
+                <label>Ime ljubimca</label>
+                <input
+                  type="text"
+                  className="ins-input"
+                  value={editingPatient.name}
+                  onChange={(e) => setEditingPatient({...editingPatient, name: e.target.value})}
+                />
+              </div>
+
+              <div className="ins-field-group">
+                <label>Vrsta</label>
+                <input
+                  type="text"
+                  className="ins-input"
+                  value={editingPatient.species}
+                  onChange={(e) => setEditingPatient({...editingPatient, species: e.target.value})}
+                />
+              </div>
+
+              <div className="ins-field-group">
+                <label>Rasa</label>
+                <input
+                  type="text"
+                  className="ins-input"
+                  value={editingPatient.breed}
+                  onChange={(e) => setEditingPatient({...editingPatient, breed: e.target.value})}
+                />
+              </div>
+
+              <div className="ins-field-group">
+                <label>Ime vlasnika</label>
+                <input
+                  type="text"
+                  className="ins-input"
+                  value={editingPatient.owner_name}
+                  onChange={(e) => setEditingPatient({...editingPatient, owner_name: e.target.value})}
+                />
+              </div>
+
+              <div className="ins-field-group">
+                <label>Telefon vlasnika</label>
+                <input
+                  type="text"
+                  className="ins-input"
+                  value={editingPatient.owner_phone}
+                  onChange={(e) => setEditingPatient({...editingPatient, owner_phone: e.target.value})}
+                />
+              </div>
+
+              <div className="ins-modal-buttons">
+                <button type="submit" className="ins-btn-save">Sačuvaj</button>
+                <button type="button" className="ins-btn-cancel" onClick={() => setEditingPatient(null)}>Otkaži</button>
+              </div>
             </form>
           </div>
         </div>

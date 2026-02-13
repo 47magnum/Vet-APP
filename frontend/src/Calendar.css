@@ -419,3 +419,40 @@
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* Osiguravamo da su sati i kolone fiksne visine */
+.time-slot, .appointment-slot {
+  height: 60px; /* Svi redovi moraju biti identični */
+  box-sizing: border-box;
+}
+
+.week-grid {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.time-column {
+  width: 60px;
+  flex-shrink: 0;
+  border-right: 1px solid #ddd;
+}
+
+.day-column {
+  flex: 1;
+  border-right: 1px solid #eee;
+  position: relative;
+}
+
+/* Uklanjamo margine koje pomeraju linije */
+.time-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #666;
+  border-bottom: 1px solid #eee;
+}
+
+.appointment-slot {
+  border-bottom: 1px solid #eee;
+  width: 100%;
+}
