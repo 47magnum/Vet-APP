@@ -2,10 +2,14 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #f0f4f8 0%, #e8f0fe 100%);
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .calendar-header {
-  max-width: 1600px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto 2rem auto;
   background: white;
   border-radius: 12px;
@@ -18,6 +22,7 @@
   font-size: 2rem;
   margin: 0 0 1.5rem 0;
   text-align: center;
+  font-weight: 700;
 }
 
 .calendar-controls {
@@ -50,6 +55,7 @@
 .view-switcher button.active {
   background: #1565c0;
   color: white;
+  box-shadow: 0 2px 4px rgba(21, 101, 192, 0.3);
 }
 
 .date-navigation {
@@ -67,11 +73,13 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
+  font-size: 1.2rem;
 }
 
 .date-navigation button:hover {
   background: #1565c0;
   color: white;
+  transform: scale(1.05);
 }
 
 .current-date {
@@ -79,6 +87,7 @@
   color: #1565c0;
   min-width: 200px;
   text-align: center;
+  font-size: 1.1rem;
 }
 
 .new-apt-btn {
@@ -91,6 +100,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  font-size: 1rem;
 }
 
 .new-apt-btn:hover {
@@ -100,146 +110,62 @@
 }
 
 .calendar-body {
-  max-width: 1600px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
   background: white;
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 0;
   box-shadow: 0 4px 6px rgba(21, 101, 192, 0.1);
-  overflow-x: auto;
-}
-
-/* Day View */
-.day-view {
-  display: flex;
-  gap: 1rem;
-}
-
-.time-column {
-  min-width: 80px;
-  border-right: 2px solid #e3f2fd;
-}
-
-.time-slot {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid #f0f4f8;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #616161;
-}
-
-.appointments-column {
-  flex: 1;
-}
-
-.appointment-slot {
-  min-height: 60px;
-  border-bottom: 1px solid #f0f4f8;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.appointment-card {
-  background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
-  color: white;
-  padding: 0.75rem;
-  border-radius: 8px;
-  position: relative;
-  box-shadow: 0 2px 8px rgba(21, 101, 192, 0.2);
-  transition: all 0.3s ease;
-}
-
-.appointment-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
-}
-
-.delete-apt-btn {
-  position: absolute;
-  top: 0.25rem;
-  right: 0.25rem;
-  background: rgba(255, 255, 255, 0.3);
-  border: none;
-  color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.delete-apt-btn:hover {
-  background: #f44336;
-  transform: scale(1.1);
-}
-
-.apt-time {
-  font-weight: 700;
-  font-size: 0.95rem;
-  margin-bottom: 0.25rem;
-}
-
-.apt-patient {
-  font-weight: 600;
-  font-size: 1.05rem;
-}
-
-.apt-owner {
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
-
-.apt-reason {
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-  font-style: italic;
-  opacity: 0.9;
-}
-
-/* Week View */
-.week-view {
-  min-width: 1200px;
-}
-
-.week-header {
-  display: grid;
-  grid-template-columns: 80px repeat(7, 1fr);
-  gap: 1px;
-  background: #e3f2fd;
-  border-radius: 8px 8px 0 0;
   overflow: hidden;
 }
 
-.time-header,
-.day-header {
-  background: #1565c0;
-  color: white;
-  padding: 1rem;
-  text-align: center;
-  font-weight: 600;
-  height: 100%;
+/* WEEK VIEW - GRID LAYOUT */
+.week-calendar {
   width: 100%;
+  overflow-x: auto;
 }
 
-.day-header {
+.calendar-grid-header {
+  display: grid;
+  grid-template-columns: 80px repeat(7, 1fr);
+  background: #1565c0;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.time-header-cell {
+  padding: 1rem;
+  text-align: center;
+  font-weight: 700;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-header-cell {
+  padding: 1rem;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-header-cell:last-child {
+  border-right: none;
 }
 
 .day-name {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  opacity: 0.9;
 }
 
 .day-number {
@@ -247,68 +173,286 @@
   font-weight: 700;
 }
 
-.week-grid {
+.calendar-grid-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-row {
   display: grid;
   grid-template-columns: 80px repeat(7, 1fr);
-  gap: 1px;
-  background: #f0f4f8;
-  width: 45%;
-
+  border-bottom: 1px solid #e3f2fd;
+  min-height: 80px;
 }
 
-.day-column {
+.calendar-row:last-child {
+  border-bottom: none;
+}
+
+.time-cell {
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: #616161;
+  background: #f9fafb;
+  border-right: 2px solid #e3f2fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.appointment-cell {
+  padding: 0.5rem;
+  border-right: 1px solid #f0f4f8;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 80px;
   background: white;
+  transition: background 0.2s;
 }
 
-.appointment-card-small {
+.appointment-cell:hover {
+  background: #fafbfc;
+}
+
+.appointment-cell:last-child {
+  border-right: none;
+}
+
+.appointment-badge {
   background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
   color: white;
   padding: 0.5rem;
   border-radius: 6px;
-  font-size: 0.85rem;
-  margin-bottom: 0.25rem;
-  position: relative;
-  box-shadow: 0 1px 4px rgba(21, 101, 192, 0.2);
-}
-
-.delete-apt-btn-small {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  background: rgba(255, 255, 255, 0.3);
-  border: none;
-  color: white;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
   cursor: pointer;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(21, 101, 192, 0.2);
+  font-size: 0.85rem;
 }
 
-.delete-apt-btn-small:hover {
-  background: #f44336;
+.appointment-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(21, 101, 192, 0.3);
 }
 
-.apt-patient-small {
-  font-weight: 600;
+.apt-patient-name {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.loading,
-.no-appointments {
+.apt-time-small {
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+/* DAY VIEW */
+.day-calendar {
+  width: 100%;
+}
+
+.day-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.day-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  border-bottom: 1px solid #e3f2fd;
+  min-height: 100px;
+}
+
+.day-row:last-child {
+  border-bottom: none;
+}
+
+.time-cell-day {
+  padding: 1.5rem 1rem;
   text-align: center;
-  padding: 3rem;
-  color: #757575;
+  font-weight: 700;
+  color: #1565c0;
+  background: #f9fafb;
+  border-right: 3px solid #1565c0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
   font-size: 1.1rem;
 }
 
-/* Responsive */
+.appointment-cell-day {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: white;
+}
+
+.empty-slot {
+  color: #9e9e9e;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+}
+
+.appointment-card-day {
+  background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(21, 101, 192, 0.2);
+}
+
+.appointment-card-day:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
+}
+
+.apt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.apt-time-day {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.apt-duration {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.apt-patient-day {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.apt-owner-day {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.apt-reason-day {
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.85;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #f5f5f5;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #616161;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.close-modal:hover {
+  background: #e0e0e0;
+  transform: rotate(90deg);
+}
+
+.detail-item {
+  margin: 1rem 0;
+  font-size: 1rem;
+  color: #424242;
+  padding: 0.75rem;
+  background: #f9fafb;
+  border-radius: 6px;
+  border-left: 3px solid #1565c0;
+}
+
+.detail-item strong {
+  color: #1565c0;
+  display: inline-block;
+  min-width: 100px;
+  font-weight: 700;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #757575;
+  font-size: 1.2rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .calendar-grid-header,
+  .calendar-row {
+    grid-template-columns: 70px repeat(7, minmax(100px, 1fr));
+  }
+}
+
 @media (max-width: 1024px) {
   .calendar-controls {
     flex-direction: column;
@@ -320,7 +464,7 @@
   }
 
   .calendar-body {
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 }
 
@@ -337,122 +481,12 @@
     font-size: 1.5rem;
   }
 
-  .view-switcher button {
-    padding: 0.5rem 1rem;
+  .calendar-grid-header,
+  .calendar-row {
+    grid-template-columns: 60px repeat(7, minmax(80px, 1fr));
   }
 
-  .current-date {
-    font-size: 0.9rem;
-    min-width: 150px;
+  .day-row {
+    grid-template-columns: 80px 1fr;
   }
-}
-
-
-.week-header,
-.week-grid {
-  direction: ltr;
-}
-.day-column, .time-column {
-  border: 1px solid #c5cae9; /* slightly darker blue-gray line */
-}
-
-/* Pozadina modala (zatamnjenje) */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Sadržaj prozora */
-.modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  animation: fadeIn 0.3s ease;
-}
-
-.close-modal {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  color: #888;
-}
-
-.detail-item {
-  margin: 15px 0;
-  font-size: 1.1rem;
-  color: #444;
-}
-
-.detail-item strong {
-  color: #2196f3;
-  display: inline-block;
-  width: 100px;
-}
-
-.clickable {
-  cursor: pointer;
-  transition: transform 0.1s;
-}
-
-.clickable:hover {
-  transform: scale(1.02);
-  filter: brightness(0.95);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-/* Osiguravamo da su sati i kolone fiksne visine */
-.time-slot, .appointment-slot {
-  height: 60px; /* Svi redovi moraju biti identični */
-  box-sizing: border-box;
-}
-
-.week-grid {
-  display: flex;
-  border-top: 1px solid #ddd;
-}
-
-.time-column {
-  width: 60px;
-  flex-shrink: 0;
-  border-right: 1px solid #ddd;
-}
-
-.day-column {
-  flex: 1;
-  border-right: 1px solid #eee;
-  position: relative;
-}
-
-/* Uklanjamo margine koje pomeraju linije */
-.time-slot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.85rem;
-  color: #666;
-  border-bottom: 1px solid #eee;
-}
-
-.appointment-slot {
-  border-bottom: 1px solid #eee;
-  width: 100%;
 }

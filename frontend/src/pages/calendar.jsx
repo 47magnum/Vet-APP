@@ -9,8 +9,6 @@ export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [view, setView] = useState('week'); 
   const [loading, setLoading] = useState(false);
-  
-  // NOVO: Stanje za prikaz detalja
   const [selectedApt, setSelectedApt] = useState(null);
 
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
@@ -26,13 +24,16 @@ export default function Calendar() {
       const response = await fetch(`${API_BASE}/api/appointments/range?start=${start}&end=${end}`);
       const data = await response.json();
       setAppointments(data);
-    } catch (err) { console.error("Error:", err); }
+    } catch (err) { 
+      console.error("Error:", err); 
+    }
     setLoading(false);
   };
 
   const getDateRange = () => {
     const start = new Date(currentDate);
     const end = new Date(currentDate);
+    
     if (view === 'day') {
       start.setHours(0, 0, 0, 0);
       end.setHours(23, 59, 59, 999);
@@ -44,141 +45,227 @@ export default function Calendar() {
       end.setDate(start.getDate() + 6);
       end.setHours(23, 59, 59, 999);
     }
-    return { start: start.toISOString(), end: end.toISOString() };
+    
+    return { 
+      start: start.toISOString(), 
+      end: end.toISOString() 
+    };
   };
 
   const navigateDate = (direction) => {
     const newDate = new Date(currentDate);
-    view === 'day' ? newDate.setDate(newDate.getDate() + direction) : newDate.setDate(newDate.getDate() + (direction * 7));
+    if (view === 'day') {
+      newDate.setDate(newDate.getDate() + direction);
+    } else {
+      newDate.setDate(newDate.getDate() + (direction * 7));
+    }
     setCurrentDate(newDate);
   };
 
   const getAppointmentsForTimeSlot = (date, hour) => {
     return appointments.filter(apt => {
       const aptDate = new Date(apt.appointment_date);
-      return aptDate.getDate() === date.getDate() &&
-             aptDate.getMonth() === date.getMonth() &&
-             aptDate.getFullYear() === date.getFullYear() &&
-             aptDate.getHours() === hour;
+      const aptHour = aptDate.getHours();
+      const aptMinute = aptDate.getMinutes();
+      
+      // Proveri da li je isti dan
+      const isSameDay = aptDate.getDate() === date.getDate() &&
+                        aptDate.getMonth() === date.getMonth() &&
+                        aptDate.getFullYear() === date.getFullYear();
+      
+      // Proveri da li termin počinje tokom ovog sata
+      // Na primer, za slot 14:00-15:00, prikaži termine koji počinju između 14:00 i 14:59
+      const isInHourSlot = aptHour === hour;
+      
+      return isSameDay && isInHourSlot;
     });
   };
 
-  const hours = Array.from({ length: 11 }, (_, i) => i + 14); // 14:00 do 24:00
+  const getWeekDays = () => {
+    const days = [];
+    const start = new Date(currentDate);
+    const day = start.getDay();
+    const diff = start.getDate() - day + (day === 0 ? -6 : 1);
+    start.setDate(diff);
+    
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
+      days.push(d);
+    }
+    return days;
+  };
 
-  // MODAL KOMPONENTA (Unutar istog fajla radi jednostavnosti)
+  const hours = Array.from({ length: 11 }, (_, i) => i + 14);
+
   const AppointmentModal = ({ apt, onClose }) => {
     if (!apt) return null;
     return (
       <div className="modal-overlay" onClick={onClose}>
         <div className="modal-content" onClick={e => e.stopPropagation()}>
           <button className="close-modal" onClick={onClose}>&times;</button>
-          <h3>Detalji Termina</h3>
-          <hr />
-          <div className="detail-item"><strong>Pacijent:</strong> {apt.patients.name}</div>
-          <div className="detail-item"><strong>Vlasnik:</strong> {apt.patients.owner_name}</div>
-          <div className="detail-item"><strong>Telefon:</strong> {apt.patients.owner_phone}</div>
-          <div className="detail-item"><strong>Vreme:</strong> {new Date(apt.appointment_date).toLocaleTimeString('sr-RS', { hour: '2-digit', minute: '2-digit' })} h</div>
-          <div className="detail-item"><strong>Trajanje:</strong> {apt.duration_minutes} min</div>
-          <div className="detail-item"><strong>Razlog:</strong> {apt.reason || "Nije navedeno"}</div>
-          <div className="detail-item"><strong>Napomena:</strong> <p>{apt.notes || "/"}</p></div>
+          <h3 style={{ color: '#1565c0', marginBottom: '1.5rem' }}>Detalji Termina</h3>
+          <div className="detail-item">
+            <strong>Pacijent:</strong> {apt.patients.name}
+          </div>
+          <div className="detail-item">
+            <strong>Vlasnik:</strong> {apt.patients.owner_name}
+          </div>
+          <div className="detail-item">
+            <strong>Telefon:</strong> {apt.patients.owner_phone}
+          </div>
+          <div className="detail-item">
+            <strong>Vreme:</strong> {new Date(apt.appointment_date).toLocaleTimeString('sr-RS', { hour: '2-digit', minute: '2-digit' })} h
+          </div>
+          <div className="detail-item">
+            <strong>Trajanje:</strong> {apt.duration_minutes} min
+          </div>
+          <div className="detail-item">
+            <strong>Razlog:</strong> {apt.reason || "Nije navedeno"}
+          </div>
+          <div className="detail-item">
+            <strong>Napomena:</strong> {apt.notes || "/"}
+          </div>
         </div>
       </div>
     );
   };
 
+  const weekDays = view === 'week' ? getWeekDays() : [];
+
   return (
-    <div className="calendar-container-wide">
+    <div className="calendar-container">
       <BackButton />
+      
       <div className="calendar-header">
         <h1>Kalendar Termina</h1>
+        
         <div className="calendar-controls">
-          <button onClick={() => setView('day')} className={view === 'day' ? 'active' : ''}>Dan</button>
-          <button onClick={() => setView('week')} className={view === 'week' ? 'active' : ''}>Nedelja</button>
-          <div className="nav-group">
+          <div className="view-switcher">
+            <button 
+              onClick={() => setView('day')} 
+              className={view === 'day' ? 'active' : ''}
+            >
+              Dan
+            </button>
+            <button 
+              onClick={() => setView('week')} 
+              className={view === 'week' ? 'active' : ''}
+            >
+              Nedelja
+            </button>
+          </div>
+
+          <div className="date-navigation">
             <button onClick={() => navigateDate(-1)}>←</button>
-            <span className="current-date">{currentDate.toLocaleDateString('sr-RS', { month: 'long', year: 'numeric' })}</span>
+            <span className="current-date">
+              {currentDate.toLocaleDateString('sr-RS', { month: 'long', year: 'numeric' })}
+            </span>
             <button onClick={() => navigateDate(1)}>→</button>
           </div>
-          <button className="new-apt-btn" onClick={() => navigate('/new-appointment')}>+ Novi Termin</button>
+
+          <button 
+            className="new-apt-btn" 
+            onClick={() => navigate('/new-appointment')}
+          >
+            + Novi Termin
+          </button>
         </div>
       </div>
 
       <div className="calendar-body">
-        {loading ? <div>Učitavanje...</div> : (
-          <div className={view === 'day' ? "day-view" : "week-view"}>
-            {/* Logika za Week Header ostaje ista... */}
-            {view === 'week' && (
-              <div className="week-header">
-                <div className="time-header">Vreme</div>
-                {Array.from({ length: 7 }, (_, i) => {
-                  const d = new Date(currentDate);
-                  const day = d.getDay();
-                  const diff = d.getDate() - day + (day === 0 ? -6 : 1) + i;
-                  d.setDate(diff);
-                  return (
-                    <div key={i} className="day-header">
-                      <div>{d.toLocaleDateString('sr-RS', { weekday: 'short' })}</div>
-                      <strong>{d.getDate()}</strong>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-
-            <div className={view === 'week' ? "week-grid" : "day-view-grid"}>
-               <div className="time-column">
-                {hours.map(hour => <div key={hour} className="time-slot">{`${hour}:00`}</div>)}
-              </div>
-              
-              {/* Renderovanje kolona/termina */}
-              {/* Ovde samo dodajemo onClick={() => setSelectedApt(apt)} na svaku karticu */}
-              {view === 'week' ? (
-                Array.from({ length: 7 }, (_, i) => {
-                  const d = new Date(currentDate);
-                  const day = d.getDay();
-                  const diff = d.getDate() - day + (day === 0 ? -6 : 1) + i;
-                  d.setDate(diff);
-                  return (
-                    <div key={i} className="day-column">
-                      {hours.map(hour => (
-                        <div key={hour} className="appointment-slot">
-                          {getAppointmentsForTimeSlot(d, hour).map(apt => (
-                            <div 
-                              key={apt.id} 
-                              className="appointment-card-small clickable" 
-                              onClick={() => setSelectedApt(apt)}
-                            >
-                              {apt.patients.name}
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  );
-                })
-              ) : (
-                <div className="appointments-column">
-                  {hours.map(hour => (
-                    <div key={hour} className="appointment-slot">
-                      {getAppointmentsForTimeSlot(currentDate, hour).map(apt => (
-                        <div 
-                          key={apt.id} 
-                          className="appointment-card clickable" 
-                          onClick={() => setSelectedApt(apt)}
-                        >
-                          <strong>{apt.patients.name}</strong> - {apt.reason}
-                        </div>
-                      ))}
-                    </div>
-                  ))}
+        {loading ? (
+          <div className="loading">Učitavanje...</div>
+        ) : view === 'week' ? (
+          <div className="week-calendar">
+            {/* Header row */}
+            <div className="calendar-grid-header">
+              <div className="time-header-cell">Vreme</div>
+              {weekDays.map((day, i) => (
+                <div key={i} className="day-header-cell">
+                  <div className="day-name">
+                    {day.toLocaleDateString('sr-RS', { weekday: 'short' })}
+                  </div>
+                  <div className="day-number">{day.getDate()}</div>
                 </div>
-              )}
+              ))}
+            </div>
+
+            {/* Time slots */}
+            <div className="calendar-grid-body">
+              {hours.map(hour => (
+                <div key={hour} className="calendar-row">
+                  <div className="time-cell">{`${hour}:00`}</div>
+                  {weekDays.map((day, i) => {
+                    const apts = getAppointmentsForTimeSlot(day, hour);
+                    return (
+                      <div key={i} className="appointment-cell">
+                        {apts.map(apt => (
+                          <div
+                            key={apt.id}
+                            className="appointment-badge"
+                            onClick={() => setSelectedApt(apt)}
+                          >
+                            <div className="apt-patient-name">{apt.patients.name}</div>
+                            <div className="apt-time-small">
+                              {new Date(apt.appointment_date).toLocaleTimeString('sr-RS', { 
+                                hour: '2-digit', 
+                                minute: '2-digit' 
+                              })}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="day-calendar">
+            <div className="day-grid">
+              {hours.map(hour => {
+                const apts = getAppointmentsForTimeSlot(currentDate, hour);
+                return (
+                  <div key={hour} className="day-row">
+                    <div className="time-cell-day">{`${hour}:00`}</div>
+                    <div className="appointment-cell-day">
+                      {apts.length === 0 ? (
+                        <div className="empty-slot">Slobodno</div>
+                      ) : (
+                        apts.map(apt => (
+                          <div
+                            key={apt.id}
+                            className="appointment-card-day"
+                            onClick={() => setSelectedApt(apt)}
+                          >
+                            <div className="apt-header">
+                              <span className="apt-time-day">
+                                {new Date(apt.appointment_date).toLocaleTimeString('sr-RS', { 
+                                  hour: '2-digit', 
+                                  minute: '2-digit' 
+                                })}
+                              </span>
+                              <span className="apt-duration">{apt.duration_minutes} min</span>
+                            </div>
+                            <div className="apt-patient-day">{apt.patients.name}</div>
+                            <div className="apt-owner-day">{apt.patients.owner_name}</div>
+                            {apt.reason && (
+                              <div className="apt-reason-day">{apt.reason}</div>
+                            )}
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
       </div>
 
-      {/* NOVO: Renderovanje Modala */}
       <AppointmentModal apt={selectedApt} onClose={() => setSelectedApt(null)} />
     </div>
   );
