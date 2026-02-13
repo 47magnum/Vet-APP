@@ -1,61 +1,174 @@
-/* Page layout */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Inter", Arial, sans-serif;
-  background-color: #f8fafc;
+.inspect-container-wide {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
-/* Container for the page */
-div {
+.inspect-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.search-input-wide {
+  width: 100%;
+  padding: 15px;
+  margin: 20px 0;
+  border: 2px solid #e3f2fd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.patient-item-row {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
 }
 
-/* Main title */
-h1 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 2rem;
+.patient-item-row:hover {
+  background: #f9fcff;
 }
 
-/* Buttons */
-button {
-  background-color: #2563eb;
+.patient-info strong {
+  font-size: 1.2rem;
+  color: #2196f3;
+}
+
+.edit-mini-btn {
+  background: #3498db;
   color: white;
   border: none;
-  border-radius: 10px;
-  padding: 16px 24px;
-  margin: 10px 0;
+  padding: 8px 16px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.15s ease;
-  width: 280px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-button:hover {
-  background-color: #1d4ed8;
-  transform: scale(1.03);
+/* Edit Form unutar Modala */
+.edit-form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
 }
 
-/* Button text */
-button h2 {
-  font-size: 18px;
-  margin: 0;
+.edit-form input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.save-btn {
+  width: 100%;
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 15px;
+  margin-top: 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.results-list {
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fcfcfc;
+}
+
+.patient-search-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.patient-search-result:last-child {
+  border-bottom: none;
+}
+
+.result-text {
+  font-size: 15px;
+  color: #444;
+}
+
+.edit-btn-pill {
+  background: #e3f2fd;
+  color: #2196f3;
+  border: 1px solid #2196f3;
+  padding: 5px 15px;
+  border-radius: 20px;
+  cursor: pointer;
   font-weight: 600;
+  transition: 0.2s;
 }
 
-/* For smaller screens */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 22px;
-  }
+.edit-btn-pill:hover {
+  background: #2196f3;
+  color: white;
+}
 
-  button {
-    width: 90%;
-  }
+/* Modal specifično za izmenu */
+.modal-content {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Kontejner koji drži sve na stranici */
+.full-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centriranje horizontalno */
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background-color: #f0f7ff;
+}
+
+/* Panel koji mora ostati iste veličine */
+.appointment-card-wide {
+  background: white;
+  width: 100%;
+  max-width: 600px; /* FIKSNA ŠIRINA - neće se širiti više od ovoga */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+  box-sizing: border-box;
+}
+
+/* Lista rezultata unutar panela */
+.results-list {
+  margin-top: 20px;
+  max-height: 300px; /* Ograničavamo visinu da ne gura panel previše dole */
+  overflow-y: auto;  /* Scroll unutar panela ako ima puno pacijenata */
+  border-top: 1px solid #eee;
+}
+
+.patient-search-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+/* Da bi polja u modalu bila lepa */
+.wide-input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0 15px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box; /* Ključno da ne prelazi ivice */
 }

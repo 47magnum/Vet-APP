@@ -29,7 +29,7 @@
             <Link to="/inspect" className="home-nav-link">
               <div className="home-nav-card">
                 <div className="nav-icon">📋</div>
-                <h2>Funkcionalnost 1</h2>
+                <h2>Izmena Informacija</h2>
                 <p>Inspect and manage records</p>
               </div>
             </Link>

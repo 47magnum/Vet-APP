@@ -403,6 +403,49 @@ app.delete('/api/appointments/:id', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+// Ažuriranje podataka o pacijentu
+app.put('/api/patients/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, species, breed, owner_name, owner_phone } = req.body;
+
+    const { data, error } = await supabase
+      .from('patients')
+      .update({ name, species, breed, owner_name, owner_phone })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Update patient error:', error);
+      return res.status(400).json({ error: error.message });
+    }
+
+    res.json({ message: 'Podaci o pacijentu uspešno ažurirani', patient: data });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Ažuriranje podataka o terminu
+app.put('/api/appointments/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { appointment_date, duration_minutes, reason, notes } = req.body;
+
+    const { data, error } = await supabase
+      .from('appointments')
+      .update({ appointment_date, duration_minutes, reason, notes })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) return res.status(400).json({ error: error.message });
+    res.json({ message: 'Termin uspešno izmenjen', appointment: data });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 // Start server
 const PORT = process.env.PORT || 5000;
