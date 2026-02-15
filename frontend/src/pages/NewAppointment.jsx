@@ -30,24 +30,35 @@ export default function NewAppointment() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const dateTime = new Date(`${formData.appointment_date}T${formData.appointment_time}`);
-    const appointmentData = {
-      ...formData,
-      appointment_date: dateTime.toISOString(),
-      duration_minutes: parseInt(formData.duration_minutes)
-    };
-
-    try {
-      const res = await fetch(`${API_BASE}/api/appointments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(appointmentData)
-      });
-      if (res.ok) setShowSuccess(true);
-      else alert("Greška pri čuvanju");
-    } catch (err) { alert("Server error"); }
+  e.preventDefault();
+  
+  // FIXED: Ne koristi toISOString(), već šalji kao timestamptz string
+  const dateTimeString = `${formData.appointment_date}T${formData.appointment_time}:00`;
+  
+  const appointmentData = {
+    patient_id: formData.patient_id,
+    appointment_date: dateTimeString, // šalji direktno string
+    duration_minutes: parseInt(formData.duration_minutes),
+    reason: formData.reason,
+    notes: formData.notes
   };
+
+  try {
+    const res = await fetch(`${API_BASE}/api/appointments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(appointmentData)
+    });
+    
+    if (res.ok) {
+      setShowSuccess(true);
+    } else {
+      alert("Greška pri čuvanju");
+    }
+  } catch (err) { 
+    alert("Server error"); 
+  }
+};
 
   const filteredPatients = patients.filter((p) => {
     const search = searchTerm.toLowerCase();

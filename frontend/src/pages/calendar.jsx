@@ -61,25 +61,21 @@ export default function Calendar() {
     }
     setCurrentDate(newDate);
   };
-
-  const getAppointmentsForTimeSlot = (date, hour) => {
-    return appointments.filter(apt => {
-      const aptDate = new Date(apt.appointment_date);
-      const aptHour = aptDate.getHours();
-      const aptMinute = aptDate.getMinutes();
-      
-      // Proveri da li je isti dan
-      const isSameDay = aptDate.getDate() === date.getDate() &&
-                        aptDate.getMonth() === date.getMonth() &&
-                        aptDate.getFullYear() === date.getFullYear();
-      
-      // Proveri da li termin počinje tokom ovog sata
-      // Na primer, za slot 14:00-15:00, prikaži termine koji počinju između 14:00 i 14:59
-      const isInHourSlot = aptHour === hour;
-      
-      return isSameDay && isInHourSlot;
-    });
-  };
+const getAppointmentsForTimeSlot = (date, hour) => {
+  return appointments.filter(apt => {
+    // Parse kao lokalno vreme (bez UTC konverzije)
+    const dateStr = apt.appointment_date;
+    const aptDate = new Date(dateStr.replace('Z', '')); // ukloni Z da ne parsira kao UTC
+    
+    const isSameDay = aptDate.getDate() === date.getDate() &&
+                      aptDate.getMonth() === date.getMonth() &&
+                      aptDate.getFullYear() === date.getFullYear();
+    
+    const isInHourSlot = aptDate.getHours() === hour;
+    
+    return isSameDay && isInHourSlot;
+  });
+};
 
   const getWeekDays = () => {
     const days = [];
